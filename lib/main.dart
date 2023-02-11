@@ -1,4 +1,3 @@
-import 'package:fletter_github/main.dart';
 import 'package:flutter/material.dart';
 
 void main() {
