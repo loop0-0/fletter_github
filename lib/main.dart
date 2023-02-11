@@ -1,3 +1,5 @@
+import 'package:fletter_github/scrap.dart';
+import 'package:chaleno/chaleno.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -27,7 +29,61 @@ class _HomepState extends State<Homep> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Text("salem alicom"),
+      body: Zone_Entree1(),
+    );
+  }
+}
+
+class Zone_Entree1 extends StatefulWidget {
+  const Zone_Entree1({super.key});
+
+  @override
+  State<Zone_Entree1> createState() => _Zone_Entree1State();
+}
+
+class _Zone_Entree1State extends State<Zone_Entree1> {
+  String? AdresseDefinition, CatgramDefinition, OrigineDefinition;
+  List? Definitions;
+  void scrapData() async {
+    var webpqge = await Chaleno()
+        .load("https://www.larousse.fr/dictionnaires/francais/peux");
+    this.AdresseDefinition = webpqge
+        ?.getElementsByClassName("AdresseDefinition")
+        .first
+        .text
+        ?.replaceAll("	", "")
+        .replaceAll("\n", "");
+    this.CatgramDefinition = webpqge
+        ?.getElementsByClassName("CatgramDefinition")
+        .first
+        .text
+        ?.replaceAll("	", "");
+    this.OrigineDefinition = webpqge
+        ?.getElementsByClassName("OrigineDefinition")
+        .first
+        .text
+        ?.replaceAll("	", "");
+//-------------------------------
+    this.Definitions = webpqge?.getElementsByClassName("DivisionDefinition");
+    //  print(Definitions);
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    scrapData();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('$AdresseDefinition'),
+        Text('$CatgramDefinition'),
+        Text('$OrigineDefinition')
+      ],
     );
   }
 }

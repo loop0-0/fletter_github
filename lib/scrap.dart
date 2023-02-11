@@ -1,25 +1,39 @@
 import 'package:chaleno/chaleno.dart';
 
-void main(List<String> args) {
-  Scrap().scrapData();
+Future<void> main(List<String> args) async {
+  Scrap koko = new Scrap();
+  await koko.scrapData();
+  print(koko.AdresseDefinition);
+  print("///////////");
 }
 
 class Scrap {
   String mot = "peux";
-  List? AdresseDefinition, CatgramDefinition, OrigineDefinition;
-  dynamic? Definitions = [];
-  void scrapData() async {
+  dynamic? AdresseDefinition, CatgramDefinition, OrigineDefinition, Definitions;
+
+  Future<void> scrapData() async {
     var webpqge = await Chaleno()
         .load("https://www.larousse.fr/dictionnaires/francais/" + mot);
-    AdresseDefinition = webpqge?.getElementsByClassName("AdresseDefinition");
-
-    //subscribeCount = webpqge?.querySelector("#name=description").text;
-    //img = webpqge?.querySelector('.jsx-1373700303 img').src;
-    //print(webpqge?.html);
-    AdresseDefinition?.forEach((element) {
-      print(element.text);
-    });
-    print(AdresseDefinition);
-    //print(subscribeCount);
+    this.AdresseDefinition = webpqge
+        ?.getElementsByClassName("AdresseDefinition")
+        .first
+        .text
+        ?.replaceAll("	", "");
+    this.CatgramDefinition = webpqge
+        ?.getElementsByClassName("CatgramDefinition")
+        .first
+        .text
+        ?.replaceAll("	", "");
+    this.OrigineDefinition = webpqge
+        ?.getElementsByClassName("OrigineDefinition")
+        .first
+        .text
+        ?.replaceAll("	", "");
+    //print(AdresseDefinition);
+    //print(CatgramDefinition);
+    // print(OrigineDefinition);
+//-------------------------------
+    Definitions = webpqge?.getElementsByClassName("DivisionDefinition");
+    //  print(Definitions);
   }
 }
