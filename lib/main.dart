@@ -77,27 +77,35 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          '$AdresseDefinition',
-          overflow: TextOverflow.ellipsis,
-          style: const TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 37, 36, 63)),
+        Icon(
+          Icons.radio_button_on_outlined,
+          color: Color.fromARGB(255, 175, 17, 17),
+          size: 24,
         ),
-        Text(
-          '$CatgramDefinition',
-          style: const TextStyle(
-              fontSize: 20, color: Color.fromARGB(255, 76, 71, 224)),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '$AdresseDefinition',
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 37, 36, 63)),
+            ),
+            Text(
+              '$CatgramDefinition',
+              style: const TextStyle(color: Color.fromARGB(255, 76, 71, 224)),
+            ),
+            Text(
+              '$OrigineDefinition',
+              style: const TextStyle(color: Color.fromARGB(255, 83, 83, 92)),
+            )
+          ],
         ),
-        Text(
-          '$OrigineDefinition',
-          style: const TextStyle(
-              fontSize: 20, color: Color.fromARGB(255, 83, 83, 92)),
-        )
       ],
     );
   }
