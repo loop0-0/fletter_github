@@ -30,6 +30,7 @@ class Scrap {
         .text
         ?.replaceAll("	", "");
     //print(AdresseDefinition);
+    //dd
     //print(CatgramDefinition);
     // print(OrigineDefinition);
 //-------------------------------
