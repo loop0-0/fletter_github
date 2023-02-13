@@ -117,17 +117,19 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
           ],
         ),
         if (Definitions != null)
-          ListView.builder(
-            shrinkWrap: true,
-            reverse: true,
-            scrollDirection: Axis.vertical,
-            itemCount: Definitions?.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(Definitions?[index].text),
-              );
-            },
-          ),
+          SizedBox(
+            child: ListView.builder(
+              shrinkWrap: true,
+              reverse: true,
+              scrollDirection: Axis.vertical,
+              itemCount: Definitions?.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(Definitions?[index].text),
+                );
+              },
+            ),
+          )
       ],
     );
   }
