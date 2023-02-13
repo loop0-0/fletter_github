@@ -29,8 +29,10 @@ class _HomepState extends State<Homep> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Zone_Entree1(),
-    );
+        resizeToAvoidBottomInset: false, // set it to false
+        body: SingleChildScrollView(
+          child: Zone_Entree1(),
+        ));
   }
 }
 
@@ -43,7 +45,8 @@ class Zone_Entree1 extends StatefulWidget {
 
 class _Zone_Entree1State extends State<Zone_Entree1> {
   String? AdresseDefinition, CatgramDefinition, OrigineDefinition;
-  List? Definitions;
+  List? Definitions = [];
+
   void scrapData() async {
     var webpqge = await Chaleno()
         .load("https://www.larousse.fr/dictionnaires/francais/peux");
@@ -64,7 +67,8 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
         .text
         ?.replaceAll("	", "");
 //-------------------------------
-    this.Definitions = webpqge?.getElementsByClassName("DivisionDefinition");
+    Definitions?.addAll(
+        webpqge?.getElementsByClassName("DivisionDefinition") as Iterable);
     //  print(Definitions);
     setState(() {});
   }
@@ -77,35 +81,55 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
       children: [
-        Icon(
-          Icons.radio_button_on_outlined,
-          color: Color.fromARGB(255, 175, 17, 17),
-          size: 24,
-        ),
-        Column(
+        Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '$AdresseDefinition',
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 37, 36, 63)),
+            Icon(
+              Icons.radio_button_on_outlined,
+              color: Color.fromARGB(255, 175, 17, 17),
+              size: 24,
             ),
-            Text(
-              '$CatgramDefinition',
-              style: const TextStyle(color: Color.fromARGB(255, 76, 71, 224)),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '$AdresseDefinition',
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 37, 36, 63)),
+                ),
+                Text(
+                  '$CatgramDefinition',
+                  style:
+                      const TextStyle(color: Color.fromARGB(255, 76, 71, 224)),
+                ),
+                Text(
+                  '$OrigineDefinition',
+                  style:
+                      const TextStyle(color: Color.fromARGB(255, 83, 83, 92)),
+                )
+              ],
             ),
-            Text(
-              '$OrigineDefinition',
-              style: const TextStyle(color: Color.fromARGB(255, 83, 83, 92)),
-            )
           ],
         ),
+        if (Definitions != null)
+          SizedBox(
+            child: ListView.builder(
+              shrinkWrap: true,
+              reverse: true,
+              scrollDirection: Axis.vertical,
+              itemCount: Definitions?.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(Definitions?[index].text),
+                );
+              },
+            ),
+          )
       ],
     );
   }
