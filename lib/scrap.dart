@@ -9,7 +9,8 @@ Future<void> main(List<String> args) async {
 
 class Scrap {
   String mot = "peux";
-  dynamic? AdresseDefinition, CatgramDefinition, OrigineDefinition, Definitions;
+  dynamic? AdresseDefinition, CatgramDefinition, OrigineDefinition;
+  List? Definitions;
 
   Future<void> scrapData() async {
     var webpqge = await Chaleno()
@@ -29,12 +30,13 @@ class Scrap {
         .first
         .text
         ?.replaceAll("	", "");
-    //print(AdresseDefinition);
-    //dd
-    //print(CatgramDefinition);
-    // print(OrigineDefinition);
+    print(AdresseDefinition);
+    print(CatgramDefinition);
+    print(OrigineDefinition);
 //-------------------------------
     Definitions = webpqge?.getElementsByClassName("DivisionDefinition");
-    //  print(Definitions);
+    Definitions?.forEach((element) {
+      print(element.text);
+    });
   }
 }
