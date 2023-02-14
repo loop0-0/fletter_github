@@ -101,7 +101,7 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(255, 37, 36, 63)),
-                ), //fdd
+                ),
                 Text(
                   '$CatgramDefinition',
                   style:
