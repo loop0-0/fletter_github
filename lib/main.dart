@@ -1,3 +1,4 @@
+import 'package:fletter_github/coler.dart';
 import 'package:fletter_github/scrap.dart';
 import 'package:chaleno/chaleno.dart';
 import 'package:flutter/material.dart';
@@ -83,40 +84,38 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(
-              Icons.radio_button_on_outlined,
-              color: Color.fromARGB(255, 219, 19, 19),
-              size: 24,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '$AdresseDefinition',
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 37, 36, 63)),
-                ),
-                Text(
+        Container(
+          padding: EdgeInsets.all(20),
+          margin: EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Styles.Navy,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('$AdresseDefinition',
+                      overflow: TextOverflow.ellipsis, style: Styles.word),
+                  Icon(
+                    Icons.volume_up,
+                    color: Styles.Red,
+                  )
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Text(
                   '$CatgramDefinition',
-                  style:
-                      const TextStyle(color: Color.fromARGB(255, 76, 71, 224)),
+                  style: Styles.redp,
                 ),
-                Text(
-                  '$OrigineDefinition',
-                  style:
-                      const TextStyle(color: Color.fromARGB(255, 83, 83, 92)),
-                )
-              ],
-            ),
-          ],
+              )
+            ],
+          ),
         ),
-        if (Definitions != null)
+        if (Definitions != 18)
           ListView.builder(
             shrinkWrap: true,
             reverse: true,
