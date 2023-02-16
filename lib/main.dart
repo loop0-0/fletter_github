@@ -89,7 +89,7 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
       children: [
         Container(
           padding: EdgeInsets.all(20),
-          margin: EdgeInsets.all(20),
+          margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: Styles.Navy,
@@ -119,7 +119,7 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: SizedBox(
             height: 800,
             width: double.infinity,
@@ -138,26 +138,69 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
               ),
               pages: [
                 Container(
-                  color: Colors.white,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: Definitions?.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(Definitions?[index].text),
-                      );
-                    },
-                  ),
+                  child: DefinitionsPage(Definitions: Definitions),
                 ),
                 Container(color: Colors.green[100]),
                 Container(color: Colors.purple[100]),
+                Container(color: Colors.green[100]),
+                Container(color: Colors.purple[100]),
               ],
-              titles: ["Définitions", "Expressions", "Homonymes"],
+              titles: [
+                "Définitions",
+                "Expressions",
+                "Homonymes",
+                "Définitions",
+                "Expressions"
+              ],
             ),
           ),
         ),
       ],
     );
+  }
+}
+
+class DefinitionsPage extends StatelessWidget {
+  const DefinitionsPage({
+    super.key,
+    required this.Definitions,
+  });
+
+  final List? Definitions;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
+      itemCount: Definitions?.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Styles.White,
+              ),
+              child: DefinitionShow(Definitions: Definitions, index: index)),
+        );
+      },
+    );
+  }
+}
+
+class DefinitionShow extends StatelessWidget {
+  const DefinitionShow({
+    super.key,
+    required this.Definitions,
+    required this.index,
+  });
+  final int index;
+  final List? Definitions;
+  // final Parser def = new Parser(Definitions?[index]);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(Definitions?[index].text);
   }
 }
