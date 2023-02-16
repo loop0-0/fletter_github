@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Styles {
-  static Color White = Color.fromARGB(255, 249, 247, 247);
-  static Color Grey = Color.fromARGB(255, 219, 226, 239);
+  static Color White = Color.fromARGB(255, 255, 255, 255);
+  static const Color Grey = Color.fromARGB(255, 246, 249, 248);
 
   static Color Blue = Color.fromARGB(255, 63, 114, 175);
   static Color Navy = Color.fromARGB(255, 20, 24, 79);
@@ -16,11 +16,11 @@ class Styles {
   static TextStyle word =
       TextStyle(color: White, fontWeight: FontWeight.bold, fontSize: 36);
   static TextStyle grantitel =
-      TextStyle(color: Black, fontWeight: FontWeight.bold, fontSize: 32);
+      TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
   static TextStyle sheptitel =
       TextStyle(color: Black, fontWeight: FontWeight.bold, fontSize: 32);
   static TextStyle normalp =
       TextStyle(color: Dark, fontWeight: FontWeight.w500, fontSize: 18);
   static TextStyle redp =
-      TextStyle(color: Red, fontWeight: FontWeight.w500, fontSize: 16);
+      TextStyle(color: Red, fontWeight: FontWeight.w500, fontSize: 12);
 }

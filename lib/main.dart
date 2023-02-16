@@ -2,6 +2,7 @@ import 'package:fletter_github/coler.dart';
 import 'package:fletter_github/scrap.dart';
 import 'package:chaleno/chaleno.dart';
 import 'package:flutter/material.dart';
+import 'package:scroll_navigation/scroll_navigation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,10 +31,12 @@ class _HomepState extends State<Homep> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-        resizeToAvoidBottomInset: false, // set it to false
-        body: SingleChildScrollView(
-          child: Zone_Entree1(),
-        ));
+      resizeToAvoidBottomInset: false, // set it to false
+      body: SingleChildScrollView(
+        child: Zone_Entree1(),
+      ),
+      backgroundColor: Styles.Grey,
+    );
   }
 }
 
@@ -115,18 +118,45 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
             ],
           ),
         ),
-        if (Definitions != 18)
-          ListView.builder(
-            shrinkWrap: true,
-            reverse: true,
-            scrollDirection: Axis.vertical,
-            itemCount: Definitions?.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(Definitions?[index].text),
-              );
-            },
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: SizedBox(
+            height: 800,
+            width: double.infinity,
+            child: TitleScrollNavigation(
+              showIdentifier: false,
+              bodyStyle: NavigationBodyStyle(
+                borderRadius:
+                    BorderRadius.vertical(bottom: Radius.circular(20)),
+              ),
+              barStyle: TitleNavigationBarStyle(
+                background: Styles.Grey,
+                style: Styles.grantitel,
+                deactiveColor: Color.fromARGB(255, 199, 198, 198),
+                activeColor: Styles.Dark,
+                elevation: 0.0,
+              ),
+              pages: [
+                Container(
+                  color: Colors.white,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: Definitions?.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(Definitions?[index].text),
+                      );
+                    },
+                  ),
+                ),
+                Container(color: Colors.green[100]),
+                Container(color: Colors.purple[100]),
+              ],
+              titles: ["Définitions", "Expressions", "Homonymes"],
+            ),
           ),
+        ),
       ],
     );
   }
