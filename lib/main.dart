@@ -49,7 +49,7 @@ class Zone_Entree1 extends StatefulWidget {
 
 class _Zone_Entree1State extends State<Zone_Entree1> {
   String? AdresseDefinition, CatgramDefinition, OrigineDefinition;
-  List? Definitions = [];
+  List<Result>? Definitions = [];
 
   void scrapData() async {
     var webpqge = await Chaleno()
@@ -71,8 +71,8 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
         .text
         ?.replaceAll("	", "");
 //-------------------------------
-    Definitions?.addAll(
-        webpqge?.getElementsByClassName("DivisionDefinition") as Iterable);
+    Definitions?.addAll(webpqge?.getElementsByClassName("DivisionDefinition")
+        as Iterable<Result>);
     //  print(Definitions);
     setState(() {});
   }
@@ -166,7 +166,7 @@ class DefinitionsPage extends StatelessWidget {
     required this.Definitions,
   });
 
-  final List? Definitions;
+  final List<Result>? Definitions;
 
   @override
   Widget build(BuildContext context) {
@@ -190,17 +190,37 @@ class DefinitionsPage extends StatelessWidget {
 }
 
 class DefinitionShow extends StatelessWidget {
-  const DefinitionShow({
+  DefinitionShow({
     super.key,
     required this.Definitions,
     required this.index,
   });
   final int index;
-  final List? Definitions;
-  // final Parser def = new Parser(Definitions?[index]);
+  final List<Result>? Definitions;
 
   @override
   Widget build(BuildContext context) {
-    return Text(Definitions?[index].text);
+    Result? def = converter(
+        "${Definitions?[index].html?.replaceFirst("&nbsp;", '<p class="defnitionparagref">').replaceFirst("&nbsp;", "</p>")}");
+
+    String? titlsynonyme = def.querySelector('.LibelleSynonyme')?.text;
+    String? synonyme = def.querySelector('.LibelleSynonyme')?.text;
+    String? exempleDefinition = def.querySelector('.ExempleDefinition')?.text;
+    String? paragrafDefinition = def.querySelector('.defnitionparagref')?.text;
+
+    return Column(
+      children: [
+        RichText(
+          text: TextSpan(
+            text: "${paragrafDefinition}",
+            style: Styles.normalp,
+            children: <TextSpan>[
+              TextSpan(text: "Exe: ${exempleDefinition}", style: Styles.redp),
+              //          TextSpan(text: ' world!'),
+            ],
+          ),
+        )
+      ],
+    );
   }
 }
