@@ -119,7 +119,7 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+          padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
           child: SizedBox(
             height: 800,
             width: double.infinity,
@@ -208,15 +208,25 @@ class DefinitionShow extends StatelessWidget {
     String? exempleDefinition = def.querySelector('.ExempleDefinition')?.text;
     String? paragrafDefinition = def.querySelector('.defnitionparagref')?.text;
 
-    return Column(
+    return Wrap(
+      direction: Axis.horizontal,
       children: [
-        RichText(
-          text: TextSpan(
-            text: "${paragrafDefinition}",
-            style: Styles.normalp,
-            children: <TextSpan>[
-              TextSpan(text: "Exe: ${exempleDefinition}", style: Styles.redp),
-              //          TextSpan(text: ' world!'),
+        Text("${index + 1}."),
+        SizedBox(width: 5.0),
+        SizedBox(
+          width: 280,
+          child: Column(
+            children: [
+              RichText(
+                text: TextSpan(
+                  text: "${paragrafDefinition}: ",
+                  style: Styles.normalp,
+                  children: <TextSpan>[
+                    TextSpan(text: "${exempleDefinition}", style: Styles.redp),
+                    //          TextSpan(text: ' world!'),
+                  ],
+                ),
+              ),
             ],
           ),
         )

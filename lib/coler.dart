@@ -20,7 +20,7 @@ class Styles {
   static TextStyle sheptitel =
       TextStyle(color: Black, fontWeight: FontWeight.bold, fontSize: 32);
   static TextStyle normalp =
-      TextStyle(color: Dark, fontWeight: FontWeight.w500, fontSize: 18);
+      TextStyle(color: Dark, fontWeight: FontWeight.w500, fontSize: 15);
   static TextStyle redp =
-      TextStyle(color: Red, fontWeight: FontWeight.w500, fontSize: 12);
+      TextStyle(color: Red, fontWeight: FontWeight.w500, fontSize: 15);
 }
