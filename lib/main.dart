@@ -208,28 +208,26 @@ class DefinitionShow extends StatelessWidget {
     String? exempleDefinition = def.querySelector('.ExempleDefinition')?.text;
     String? paragrafDefinition = def.querySelector('.defnitionparagref')?.text;
 
-    return Wrap(
-      direction: Axis.horizontal,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("${index + 1}."),
-        SizedBox(width: 5.0),
-        SizedBox(
-          width: 280,
-          child: Column(
-            children: [
-              RichText(
-                text: TextSpan(
-                  text: "${paragrafDefinition}: ",
-                  style: Styles.normalp,
-                  children: <TextSpan>[
-                    TextSpan(text: "${exempleDefinition}", style: Styles.redp),
-                    //          TextSpan(text: ' world!'),
-                  ],
-                ),
-              ),
-            ],
+        Expanded(
+          flex: 0,
+          child: Text("${index + 1}. "),
+        ),
+        Expanded(
+          flex: 4,
+          child: RichText(
+            text: TextSpan(
+              text: "${paragrafDefinition}: ",
+              style: Styles.normalp,
+              children: <TextSpan>[
+                TextSpan(text: "${exempleDefinition}", style: Styles.redp),
+                //          TextSpan(text: ' world!'),
+              ],
+            ),
           ),
-        )
+        ),
       ],
     );
   }
