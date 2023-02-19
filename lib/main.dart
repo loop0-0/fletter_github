@@ -53,7 +53,7 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
 
   void scrapData() async {
     var webpqge = await Chaleno()
-        .load("https://www.larousse.fr/dictionnaires/francais/peux");
+        .load("https://www.larousse.fr/dictionnaires/francais/froid");
     this.AdresseDefinition = webpqge
         ?.getElementsByClassName("AdresseDefinition")
         .first
@@ -203,8 +203,8 @@ class DefinitionShow extends StatelessWidget {
     Result? def = converter(
         "${Definitions?[index].html?.replaceFirst("&nbsp;", '<p class="defnitionparagref">').replaceFirst("&nbsp;", "</p>")}");
 
-    String? titlsynonyme = def.querySelector('.LibelleSynonyme')?.text;
-    String? synonyme = def.querySelector('.LibelleSynonyme')?.text;
+    List? titlsynonyme = def.querySelectorAll('.LibelleSynonyme');
+    List? synonyme = def.querySelectorAll('.Synonymes');
     String? exempleDefinition = def.querySelector('.ExempleDefinition')?.text;
     String? paragrafDefinition = def.querySelector('.defnitionparagref')?.text;
 
@@ -219,11 +219,18 @@ class DefinitionShow extends StatelessWidget {
           flex: 4,
           child: RichText(
             text: TextSpan(
-              text: "${paragrafDefinition}: ",
+              text: "${paragrafDefinition}",
               style: Styles.normalp,
               children: <TextSpan>[
-                TextSpan(text: "${exempleDefinition}", style: Styles.redp),
-                //          TextSpan(text: ' world!'),
+                if (exempleDefinition != null)
+                  TextSpan(
+                      text: ": ${exempleDefinition}",
+                      style: TextStyle(color: Colors.indigoAccent)),
+                for (var i = 0; i < synonyme!.length; i++)
+                  TextSpan(text: "\n${titlsynonyme![i].text}", children: [
+                    TextSpan(text: " ${synonyme[i].text}", style: Styles.redp)
+                  ]),
+                // ,
               ],
             ),
           ),
