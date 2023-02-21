@@ -71,9 +71,8 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
         .text
         ?.replaceAll("	", "");
 //-------------------------------
-    Definitions?.addAll(webpqge?.getElementsByClassName("DivisionDefinition")
-        as Iterable<Result>);
-    //  print(Definitions);
+    Definitions?.addAll(
+        webpqge?.getElementsByClassName("Definitions") as Iterable<Result>);
     setState(() {});
   }
 
@@ -201,40 +200,46 @@ class DefinitionShow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Result? def = converter(
-        "${Definitions?[index].html?.replaceFirst("&nbsp;", '<p class="defnitionparagref">').replaceFirst("&nbsp;", "</p>")}");
-
+        "${Definitions?[index].html?.replaceAll(">&nbsp;", '><p class="defnitionparagref">').replaceAll("&nbsp;:", "</p>:")}");
+    List? divisionDefinition = def.querySelectorAll(".DivisionDefinition");
     List? titlsynonyme = def.querySelectorAll('.LibelleSynonyme');
     List? synonyme = def.querySelectorAll('.Synonymes');
-    String? exempleDefinition = def.querySelector('.ExempleDefinition')?.text;
-    String? paragrafDefinition = def.querySelector('.defnitionparagref')?.text;
+    List? exempleDefinition = def.querySelectorAll('.ExempleDefinition');
+    List? paragrafDefinition = def.querySelectorAll('.defnitionparagref');
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
       children: [
-        Expanded(
-          flex: 0,
-          child: Text("${index + 1}. "),
-        ),
-        Expanded(
-          flex: 4,
-          child: RichText(
-            text: TextSpan(
-              text: "${paragrafDefinition}",
-              style: Styles.normalp,
-              children: <TextSpan>[
-                if (exempleDefinition != null)
-                  TextSpan(
-                      text: ": ${exempleDefinition}",
-                      style: TextStyle(color: Colors.indigoAccent)),
-                for (var i = 0; i < synonyme!.length; i++)
-                  TextSpan(text: "\n${titlsynonyme![i].text}", children: [
-                    TextSpan(text: " ${synonyme[i].text}", style: Styles.redp)
-                  ]),
-                // ,
-              ],
-            ),
+        for (var j = 0; j < divisionDefinition!.length; j++)
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                flex: 0,
+                child: Text("${j + 1}. "),
+              ),
+              Expanded(
+                flex: 4,
+                child: RichText(
+                  text: TextSpan(
+                    text: "${paragrafDefinition![j].text}",
+                    style: Styles.normalp,
+                    children: <TextSpan>[
+                      /*   if (exempleDefinition != null)
+                        TextSpan(
+                            text: ": ${exempleDefinition}",
+                            style: TextStyle(color: Colors.indigoAccent)),
+                      for (var i = 0; i < synonyme!.length; i++)
+                        TextSpan(text: "\n${titlsynonyme![i].text}", children: [
+                          TextSpan(
+                              text: " ${synonyme[i].text}", style: Styles.redp)
+                        ]),
+                      // ,*/
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ),
       ],
     );
   }

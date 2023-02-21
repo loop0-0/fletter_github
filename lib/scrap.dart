@@ -46,14 +46,14 @@ class Scrap {
 //-------------------------------
 
     var Definitions = Result(Element.html(
-        "${webpqge?.getElementsByClassName("DivisionDefinition").first.html?.replaceFirst("&nbsp;", '<p class="defnitionparagref">').replaceFirst("&nbsp;", "</p>")}"));
+        "${webpqge?.getElementsByClassName("DivisionDefinition").first.html?.replaceFirst(">&nbsp;", '><p class="defnitionparagref">').replaceFirst("&nbsp;:", "</p>:")}"));
     // Definitions?.forEach((element) {
     //print(Definitions.querySelector('.LibelleSynonyme')?.text);
     //print(Definitions.querySelector('.Synonymes')?.text);
     //print(Definitions.querySelector('.numDef')?.text);
     //  print(Definitions.querySelector('.ExempleDefinition')?.text);
     //  print(Definitions.querySelector('.defnitionparagref')?.text);
-    //   print(Definitions.html);
+    print(Definitions.html);
 
     //   });
   }
