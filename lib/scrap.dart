@@ -10,18 +10,17 @@ Future<void> main(List<String> args) async {
 
 class Scrap {
   String mot = "peux";
-  dynamic? AdresseDefinition, CatgramDefinition, OrigineDefinition;
+  dynamic? CatgramDefinition, OrigineDefinition;
+  List? AdresseDefinition;
   //Result? Definitions;
 
   Future<void> scrapData() async {
     var webpqge = await Chaleno()
         .load("https://www.larousse.fr/dictionnaires/francais/" + mot);
 
-    this.AdresseDefinition = webpqge
-        ?.getElementsByClassName("AdresseDefinition")
-        .first
-        .text
-        ?.replaceAll("	", "");
+    this.AdresseDefinition =
+        webpqge?.getElementsByClassName("AdresseDefinition");
+
     this.CatgramDefinition = webpqge
         ?.getElementsByClassName("CatgramDefinition")
         .first
@@ -32,7 +31,16 @@ class Scrap {
         .first
         .text
         ?.replaceAll("	", "");
-    print(AdresseDefinition);
+
+    AdresseDefinition?.forEach((element) {
+      print(element.text?.replaceAll("	", ""));
+    });
+    var newAdresseDefinition =
+        AdresseDefinition?.map((e) => e.text?.replaceAll("	", ""));
+    newAdresseDefinition?.forEach((element) {
+      print(element);
+    });
+
     print(CatgramDefinition);
     print(OrigineDefinition);
 //-------------------------------
@@ -45,7 +53,7 @@ class Scrap {
     //print(Definitions.querySelector('.numDef')?.text);
     //  print(Definitions.querySelector('.ExempleDefinition')?.text);
     //  print(Definitions.querySelector('.defnitionparagref')?.text);
-    print(Definitions.html);
+    //   print(Definitions.html);
 
     //   });
   }
