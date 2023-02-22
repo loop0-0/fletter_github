@@ -203,18 +203,22 @@ class DefinitionShow extends StatelessWidget {
         "${Definitions?[index].html?.replaceAll(">&nbsp;", '><p class="defnitionparagref">').replaceAll("&nbsp;:", "</p>:")}");
     List<Result>? divisionDefinition =
         def.querySelectorAll(".DivisionDefinition");
-    List? titlsynonyme;
-    List? synonyme;
-    List? exempleDefinition;
-    List? paragrafDefinition;
-    int l = 0;
-    for (var ele in divisionDefinition!) {
-      exempleDefinition?.add(ele.querySelector('.ExempleDefinition'));
-      titlsynonyme?[l] = ele.querySelector('.LibelleSynonyme');
-      synonyme?[l] = ele.querySelector('.Synonymes');
-      paragrafDefinition?[l] = ele.querySelector('.defnitionparagref');
-    }
 
+    List<Result?> paragrafDefinition = [];
+    List<List<Result>?> exempleDefinition = [];
+    List<List<Result>?> titlsynonyme = [];
+    List<List<Result>?> synonyme = [];
+    // [i] =;
+    //?[i] =;
+    for (var i = 0; i < divisionDefinition!.length; i++) {
+      paragrafDefinition
+          .add(divisionDefinition[i].querySelector('.defnitionparagref'));
+      exempleDefinition
+          .add(divisionDefinition[i].querySelectorAll(".ExempleDefinition"));
+      titlsynonyme
+          .add(divisionDefinition[i].querySelectorAll('.LibelleSynonyme'));
+      synonyme.add(divisionDefinition[i].querySelectorAll('.Synonymes'));
+    }
     return Column(
       children: [
         for (var j = 0; j < divisionDefinition.length; j++)
@@ -229,18 +233,22 @@ class DefinitionShow extends StatelessWidget {
                 flex: 4,
                 child: RichText(
                   text: TextSpan(
-                    text: "${paragrafDefinition![j].text}",
+                    text: "${paragrafDefinition[j]?.text}",
                     style: Styles.normalp,
                     children: <TextSpan>[
-                      if (exempleDefinition![j] != null)
-                        TextSpan(
-                            text: ": ${exempleDefinition[j]}",
-                            style: TextStyle(color: Colors.indigoAccent)),
-                      /* for (var i = 0; i < synonyme!.length; i++)
-                        TextSpan(text: "\n${titlsynonyme![i].text}", children: [
+                      if (exempleDefinition[j] != null)
+                        for (var i = 0; i < exempleDefinition[j]!.length; i++)
                           TextSpan(
-                              text: " ${synonyme[i].text}", style: Styles.redp)
-                        ]),
+                              text: ": ${exempleDefinition[j]?[i].text}",
+                              style: TextStyle(color: Colors.indigoAccent)),
+                      for (var i = 0; i < synonyme[j]!.length; i++)
+                        TextSpan(
+                            text: "\n${titlsynonyme[j]?[i].text}",
+                            children: [
+                              TextSpan(
+                                  text: " ${synonyme[j]?[i].text}",
+                                  style: Styles.redp)
+                            ]),
                       // ,*/
                     ],
                   ),
