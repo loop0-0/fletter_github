@@ -201,15 +201,23 @@ class DefinitionShow extends StatelessWidget {
   Widget build(BuildContext context) {
     Result? def = converter(
         "${Definitions?[index].html?.replaceAll(">&nbsp;", '><p class="defnitionparagref">').replaceAll("&nbsp;:", "</p>:")}");
-    List? divisionDefinition = def.querySelectorAll(".DivisionDefinition");
-    List? titlsynonyme = def.querySelectorAll('.LibelleSynonyme');
-    List? synonyme = def.querySelectorAll('.Synonymes');
-    List? exempleDefinition = def.querySelectorAll('.ExempleDefinition');
-    List? paragrafDefinition = def.querySelectorAll('.defnitionparagref');
+    List<Result>? divisionDefinition =
+        def.querySelectorAll(".DivisionDefinition");
+    List? titlsynonyme;
+    List? synonyme;
+    List? exempleDefinition;
+    List? paragrafDefinition;
+    int l = 0;
+    for (var ele in divisionDefinition!) {
+      exempleDefinition?.add(ele.querySelector('.ExempleDefinition'));
+      titlsynonyme?[l] = ele.querySelector('.LibelleSynonyme');
+      synonyme?[l] = ele.querySelector('.Synonymes');
+      paragrafDefinition?[l] = ele.querySelector('.defnitionparagref');
+    }
 
     return Column(
       children: [
-        for (var j = 0; j < divisionDefinition!.length; j++)
+        for (var j = 0; j < divisionDefinition.length; j++)
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -224,11 +232,11 @@ class DefinitionShow extends StatelessWidget {
                     text: "${paragrafDefinition![j].text}",
                     style: Styles.normalp,
                     children: <TextSpan>[
-                      /*   if (exempleDefinition != null)
+                      if (exempleDefinition![j] != null)
                         TextSpan(
-                            text: ": ${exempleDefinition}",
+                            text: ": ${exempleDefinition[j]}",
                             style: TextStyle(color: Colors.indigoAccent)),
-                      for (var i = 0; i < synonyme!.length; i++)
+                      /* for (var i = 0; i < synonyme!.length; i++)
                         TextSpan(text: "\n${titlsynonyme![i].text}", children: [
                           TextSpan(
                               text: " ${synonyme[i].text}", style: Styles.redp)
