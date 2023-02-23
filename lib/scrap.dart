@@ -43,7 +43,15 @@ class Scrap {
 
 //-------------------------------
     List<Result>? Definitions = [];
+    List<Result?> catgramDefinition = [];
 
+    catgramDefinition.addAll(
+        webpqge?.querySelectorAll(".CatgramDefinition") as Iterable<Result>);
+    print(catgramDefinition.first?.title);
+    for (var element in catgramDefinition) {
+      print("----------");
+      print(element?.text);
+    }
     Definitions.addAll(
         webpqge?.getElementsByClassName("Definitions") as Iterable<Result>);
 
@@ -54,7 +62,6 @@ class Scrap {
 
     List<List<Result>?> exempleDefinition = [];
     List<List<Result>?> titlsynonyme = [];
-
     List<Result?> paragrafDefinition = [];
     for (var i = 0; i < divisionDefinition!.length; i++) {
       titlsynonyme
@@ -65,16 +72,16 @@ class Scrap {
           .add(divisionDefinition[i].querySelector('.defnitionparagref'));
     }
 
-    for (var i = 0; i < divisionDefinition.length; i++) {
-      print(paragrafDefinition[i]?.text);
-      exempleDefinition[i]?.forEach((element) {
-        print(element.text);
-      });
-      titlsynonyme[i]?.forEach((element) {
-        print(element.text);
-      });
-      print("-----------------");
-    }
+    // for (var i = 0; i < divisionDefinition.length; i++) {
+    //   print(paragrafDefinition[i]?.text);
+    //   exempleDefinition[i]?.forEach((element) {
+    //     print(element.text);
+    //   });
+    //   titlsynonyme[i]?.forEach((element) {
+    //     print(element.text);
+    //   });
+    //   print("-----------------");
+    // }
   }
 
   //   });
