@@ -43,14 +43,14 @@ class Scrap {
 
 //-------------------------------
     List<Result>? Definitions = [];
-    List<Result?> catgramDefinition = [];
+    List<Result>? catgramDefinition;
 
-    catgramDefinition.addAll(
-        webpqge?.querySelectorAll(".CatgramDefinition") as Iterable<Result>);
-    print(catgramDefinition.first?.title);
-    for (var element in catgramDefinition) {
+    catgramDefinition = webpqge
+        ?.getElementById("definition")
+        .querySelectorAll(".CatgramDefinition");
+    for (var element in catgramDefinition!) {
       print("----------");
-      print(element?.text);
+      print(element.text);
     }
     Definitions.addAll(
         webpqge?.getElementsByClassName("Definitions") as Iterable<Result>);
@@ -59,18 +59,6 @@ class Scrap {
         "${Definitions[0].html?.replaceAll(">&nbsp;", '><p class="defnitionparagref">').replaceAll("&nbsp;:", "</p>:")}");
     List<Result>? divisionDefinition =
         def.querySelectorAll(".DivisionDefinition");
-
-    List<List<Result>?> exempleDefinition = [];
-    List<List<Result>?> titlsynonyme = [];
-    List<Result?> paragrafDefinition = [];
-    for (var i = 0; i < divisionDefinition!.length; i++) {
-      titlsynonyme
-          .add(divisionDefinition[i].querySelectorAll(".LibelleSynonyme"));
-      exempleDefinition
-          .add(divisionDefinition[i].querySelectorAll(".ExempleDefinition"));
-      paragrafDefinition
-          .add(divisionDefinition[i].querySelector('.defnitionparagref'));
-    }
 
     // for (var i = 0; i < divisionDefinition.length; i++) {
     //   print(paragrafDefinition[i]?.text);
@@ -87,4 +75,13 @@ class Scrap {
   //   });
 }
 
-Result converter(String html) => Result(Element.html(html));
+Result converter(String? html) => Result(Element.html("$html"));
+
+extension StringCasingExtension on String {
+  String toCapitalized() =>
+      length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
+  String toTitleCase() => replaceAll(RegExp(' +'), ' ')
+      .split(' ')
+      .map((str) => str.toCapitalized())
+      .join(' ');
+}

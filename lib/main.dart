@@ -49,11 +49,12 @@ class Zone_Entree1 extends StatefulWidget {
 
 class _Zone_Entree1State extends State<Zone_Entree1> {
   String? AdresseDefinition, CatgramDefinition, OrigineDefinition;
-  List<Result>? Definitions = [];
+
+  Result? definition;
 
   void scrapData() async {
     var webpqge = await Chaleno()
-        .load("https://www.larousse.fr/dictionnaires/francais/froid");
+        .load("https://www.larousse.fr/dictionnaires/francais/chaud");
     this.AdresseDefinition = webpqge
         ?.getElementsByClassName("AdresseDefinition")
         .first
@@ -71,8 +72,8 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
         .text
         ?.replaceAll("	", "");
 //-------------------------------
-    Definitions?.addAll(
-        webpqge?.getElementsByClassName("Definitions") as Iterable<Result>);
+    definition = webpqge?.getElementById("definition");
+
     setState(() {});
   }
 
@@ -137,7 +138,7 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
               ),
               pages: [
                 Container(
-                  child: DefinitionsPage(Definitions: Definitions),
+                  child: DefinitionsPage(definition: definition),
                 ),
                 Container(color: Colors.green[100]),
                 Container(color: Colors.purple[100]),
@@ -162,38 +163,58 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
 class DefinitionsPage extends StatelessWidget {
   const DefinitionsPage({
     super.key,
-    required this.Definitions,
+    required this.definition,
   });
 
-  final List<Result>? Definitions;
+  final Result? definition;
 
   @override
   Widget build(BuildContext context) {
+    List<Result>? Definitions = definition?.querySelectorAll(".Definitions");
+
+    List<Result>? catgramDefinition =
+        definition?.querySelectorAll(".CatgramDefinition");
+
     return ListView.builder(
       shrinkWrap: true,
       scrollDirection: Axis.vertical,
       itemCount: Definitions?.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Styles.White,
-              ),
-              child: DefinitionShow(Definitions: Definitions, index: index)),
-        );
+        if (Definitions != null) {
+          return ListTile(
+            title: Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Styles.White,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${catgramDefinition![index].text?.toTitleCase()}",
+                      style: Styles.redp,
+                    ),
+                    DefinitionShow(
+                      Definitions: Definitions,
+                      index: index,
+                    ),
+                  ],
+                )),
+          );
+        }
       },
     );
   }
 }
 
 class DefinitionShow extends StatelessWidget {
-  DefinitionShow({
+  const DefinitionShow({
     super.key,
     required this.Definitions,
     required this.index,
   });
+
   final int index;
   final List<Result>? Definitions;
 
@@ -205,11 +226,11 @@ class DefinitionShow extends StatelessWidget {
         def.querySelectorAll(".DivisionDefinition");
 
     List<Result?> paragrafDefinition = [];
+    //++RubriqueDefinition
     List<List<Result>?> exempleDefinition = [];
     List<List<Result>?> titlsynonyme = [];
     List<List<Result>?> synonyme = [];
-    // [i] =;
-    //?[i] =;
+
     for (var i = 0; i < divisionDefinition!.length; i++) {
       paragrafDefinition
           .add(divisionDefinition[i].querySelector('.defnitionparagref'));
@@ -233,7 +254,7 @@ class DefinitionShow extends StatelessWidget {
                 flex: 4,
                 child: RichText(
                   text: TextSpan(
-                    text: "${paragrafDefinition[j]?.text}",
+                    text: paragrafDefinition[j]?.text, //   ++ ":"
                     style: Styles.normalp,
                     children: <TextSpan>[
                       if (exempleDefinition[j] != null)
@@ -249,7 +270,6 @@ class DefinitionShow extends StatelessWidget {
                                   text: " ${synonyme[j]?[i].text}",
                                   style: Styles.redp)
                             ]),
-                      // ,*/
                     ],
                   ),
                 ),
