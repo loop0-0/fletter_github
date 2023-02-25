@@ -57,7 +57,7 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
 
   void scrapData() async {
     var webpqge = await Chaleno()
-        .load("https://www.larousse.fr/dictionnaires/francais/pouvoir");
+        .load("https://www.larousse.fr/dictionnaires/francais/chaud");
     this.AdresseDefinition = webpqge
         ?.getElementsByClassName("AdresseDefinition")
         .first
