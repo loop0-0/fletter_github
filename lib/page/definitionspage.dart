@@ -89,54 +89,60 @@ class DefinitionShow extends StatelessWidget {
     return Column(
       children: [
         for (var j = 0; j < divisionDefinition.length; j++)
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (rubriqueDefinition[j] != null)
-                Text(
-                  "   ${rubriqueDefinition[j]?.text}",
-                  style: Styles.redp,
-                ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(flex: 0, child: Text("${j + 1}. ")),
-                  Expanded(
-                    flex: 4,
-                    child: RichText(
-                      text: TextSpan(
-                        text: paragrafDefinition[j]?.text,
-                        style: Styles.normalp,
-                        children: <TextSpan>[
-                          if (exempleDefinition[j] != null)
-                            for (var i = 0;
-                                i < exempleDefinition[j]!.length;
-                                i++)
-                              if (i == 0)
-                                TextSpan(
-                                    text: ": ${exempleDefinition[j]?[i].text}",
-                                    style:
-                                        TextStyle(color: Colors.indigoAccent))
-                              else
-                                TextSpan(
-                                    text: " ${exempleDefinition[j]?[i].text}",
-                                    style:
-                                        TextStyle(color: Colors.indigoAccent)),
-                          for (var i = 0; i < synonyme[j]!.length; i++)
-                            TextSpan(
-                                text: "\n${titlsynonyme[j]?[i].text}",
-                                children: [
+          Container(
+            //   color: (j % 2 == 0) ? Styles.White : Styles.Grey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (rubriqueDefinition[j] != null)
+                  Text(
+                    "   ${rubriqueDefinition[j]?.text}",
+                    style: Styles.redp,
+                  ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(flex: 0, child: Text("${j + 1}. ")),
+                    Expanded(
+                      flex: 4,
+                      child: RichText(
+                        text: TextSpan(
+                          text: paragrafDefinition[j]?.text,
+                          style: Styles.normalp,
+                          children: <TextSpan>[
+                            if (exempleDefinition[j] != null)
+                              for (var i = 0;
+                                  i < exempleDefinition[j]!.length;
+                                  i++)
+                                if (i == 0)
                                   TextSpan(
+                                      text:
+                                          ": ${exempleDefinition[j]?[i].text}",
+                                      style:
+                                          TextStyle(color: Colors.indigoAccent))
+                                else
+                                  TextSpan(
+                                      text: " ${exempleDefinition[j]?[i].text}",
+                                      style: TextStyle(
+                                          color: Colors.indigoAccent)),
+                            for (var i = 0; i < synonyme[j]!.length; i++)
+                              TextSpan(
+                                  text: "\n${titlsynonyme[j]?[i].text}",
+                                  children: [
+                                    TextSpan(
                                       text: " ${synonyme[j]?[i].text}",
-                                      style: Styles.redp)
-                                ]),
-                        ],
+                                      style: Styles.redp,
+                                    )
+                                  ]),
+                            TextSpan(text: "\n")
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
       ],
     );
