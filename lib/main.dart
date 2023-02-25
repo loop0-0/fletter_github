@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:scroll_navigation/scroll_navigation.dart';
 
 import 'page/definitionspage.dart';
+import 'page/expressionspage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -52,11 +53,11 @@ class Zone_Entree1 extends StatefulWidget {
 class _Zone_Entree1State extends State<Zone_Entree1> {
   String? AdresseDefinition, CatgramDefinition, OrigineDefinition;
 
-  Result? definition;
+  Result? definition, expression;
 
   void scrapData() async {
     var webpqge = await Chaleno()
-        .load("https://www.larousse.fr/dictionnaires/francais/chaud");
+        .load("https://www.larousse.fr/dictionnaires/francais/pouvoir");
     this.AdresseDefinition = webpqge
         ?.getElementsByClassName("AdresseDefinition")
         .first
@@ -75,6 +76,7 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
         ?.replaceAll("	", "");
 //-------------------------------
     definition = webpqge?.getElementById("definition");
+    expression = webpqge?.getElementById("locution");
 
     setState(() {});
   }
@@ -142,7 +144,9 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
                 Container(
                   child: DefinitionsPage(definition: definition),
                 ),
-                Container(color: Colors.green[100]),
+                Container(
+                  child: ExpressionsPage(expression: expression),
+                ),
                 Container(color: Colors.purple[100]),
                 Container(color: Colors.green[100]),
                 Container(color: Colors.purple[100]),
