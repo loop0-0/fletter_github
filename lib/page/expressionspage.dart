@@ -81,7 +81,7 @@ class DefinitionShow extends StatelessWidget {
       children: [
         for (var j = 0; j < exp.length; j++)
           Container(
-            //   color: (j % 2 == 0) ? Styles.White : Styles.Grey,
+            //  // color: (j % 2 == 0) ? Styles.White : Styles.Grey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
