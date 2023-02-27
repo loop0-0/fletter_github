@@ -1,5 +1,6 @@
 import 'package:chaleno/chaleno.dart';
 import 'package:flutter/material.dart';
+import 'package:highlight_text/highlight_text.dart';
 
 import '../coler.dart';
 import '../scrap.dart';
@@ -68,20 +69,45 @@ class DefinitionShow extends StatelessWidget {
     List<Result?> adresseLocution = [];
     List<Result?> rubriqueDefinition = [];
     List<Result?> texteLocution = [];
+    List<Result?> indicateurLocution = [];
+    List<List<Result?>?> exempleDefinition = [];
 
+    List<Map<String, HighlightedWord>> words = [];
     for (var i = 0; i < exp!.length; i++) {
-      adresseLocution.add(exp[i].querySelector(".AdresseLocution"));
+      Map<String, HighlightedWord> word = {};
       texteLocution.add(exp[i].querySelector(".TexteLocution"));
       rubriqueDefinition.add(exp[i].querySelector('.RubriqueDefinition'));
-    }
 
-    List<Result?> paragrafDefinition = [];
+      ///
+      indicateurLocution.add(exp[i].querySelector(".IndicateurLocution"));
+      word.addAll({
+        "${indicateurLocution[i]?.text}": HighlightedWord(
+            textStyle: TextStyle(color: Colors.redAccent, fontSize: 15))
+      });
+
+      ///
+      adresseLocution.add(exp[i].querySelector(".AdresseLocution"));
+      word.addAll({
+        "${adresseLocution[i]?.text?.replaceFirst("${indicateurLocution[i]?.text}", "")}":
+            HighlightedWord(
+                textStyle: TextStyle(color: Colors.indigoAccent, fontSize: 15))
+      });
+
+      ///
+
+      exempleDefinition.add(exp[i].querySelectorAll(".ExempleDefinition"));
+      exempleDefinition[i]?.forEach((elo) {
+        word.addAll({"${elo?.text}": HighlightedWord(textStyle: Styles.redp)});
+      });
+
+      words.add(word);
+    }
 
     return Column(
       children: [
         for (var j = 0; j < exp.length; j++)
           Container(
-            //  // color: (j % 2 == 0) ? Styles.White : Styles.Grey,
+            //  color: (j % 2 == 0) ? Styles.White : Styles.Grey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -98,7 +124,7 @@ class DefinitionShow extends StatelessWidget {
                       flex: 4,
                       child: TextHighlight(
                         text:
-                            "${adresseLocution[j]?.text}${texteLocution[j]?.text}",
+                            "${adresseLocution[j]?.text?.replaceAll("", "")}${texteLocution[j]?.text}\n",
                         words: words[j],
                         textStyle: Styles.normalp,
                       ),
