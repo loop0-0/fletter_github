@@ -146,17 +146,11 @@ class _Zone_Entree1State extends State<Zone_Entree1> {
                 ),
                 Container(
                   child: ExpressionsPage(expression: expression),
-                ),
-                Container(color: Colors.purple[100]),
-                Container(color: Colors.green[100]),
-                Container(color: Colors.purple[100]),
+                )
               ],
               titles: [
                 "Définitions",
                 "Expressions",
-                "Homonymes",
-                "Définitions",
-                "Expressions"
               ],
             ),
           ),
