@@ -96,18 +96,11 @@ class DefinitionShow extends StatelessWidget {
                     Expanded(flex: 0, child: Text("${j + 1}. ")),
                     Expanded(
                       flex: 4,
-                      child: RichText(
-                        text: TextSpan(
-                          text: adresseLocution[j]?.text?.replaceAll("", ""),
-                          style: TextStyle(
-                              color: Colors.indigoAccent, fontSize: 15),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: texteLocution[j]?.text,
-                                style: Styles.normalp),
-                            TextSpan(text: "\n")
-                          ],
-                        ),
+                      child: TextHighlight(
+                        text:
+                            "${adresseLocution[j]?.text}${texteLocution[j]?.text}",
+                        words: words[j],
+                        textStyle: Styles.normalp,
                       ),
                     ),
                   ],
